@@ -67,7 +67,7 @@
                     <div class="col-4 ms-2">
                         <div class="input-group mb-3">
                             <input type="file" class="form-control formImg" name="txt_imagen">
-<!--                            <input type="text" class="form-control formImg" name="txt_imagen">-->
+                            <!--                            <input type="text" class="form-control formImg" name="txt_imagen">-->
                         </div>
                     </div>
                 </div>
@@ -130,14 +130,14 @@
                         <button type="submit" class="btn btnAdd">Agregar</button>
                     </div>
                 </div>
-        </div>
-    </form>
 
-    <script>
-        // Función para abrir/cerrar el sidebar
-        function toggleSidebar() {
-            document.getElementById("mySidebar").classList.toggle("open");
-        }
-    </script>
-</body>
+            </form>
+        </div>
+        <script>
+            // Función para abrir/cerrar el sidebar
+            function toggleSidebar() {
+                document.getElementById("mySidebar").classList.toggle("open");
+            }
+        </script>
+    </body>
 </html>
