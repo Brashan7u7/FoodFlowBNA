@@ -12,18 +12,18 @@ public class CategoriaModel {
     private int id;
     private String nombre;
     private String imagen;
-
-    public CategoriaModel(int id, String nombre, String imagen) {
-        this.id = id;
-        this.nombre = nombre;
-        this.imagen = imagen;
-    }
-
+    private String estatus;
+    
     public CategoriaModel() {
     }
 
-    
-    
+    public CategoriaModel(int id, String nombre, String imagen, String estatus) {
+        this.id = id;
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.estatus = estatus;
+    }
+
     public int getId() {
         return id;
     }
@@ -48,11 +48,19 @@ public class CategoriaModel {
         this.imagen = imagen;
     }
 
-    @Override
-    public String toString() {
-        return "CategoriaModel{" + "id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + '}';
+    public String getEstatus() {
+        return estatus;
     }
 
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
     
+    
+
+    @Override
+    public String toString() {
+        return "CategoriaModel{" + "id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", estatus=" + estatus + '}';
+    }
     
 }

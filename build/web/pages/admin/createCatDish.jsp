@@ -6,14 +6,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Platillos</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <style>
             .font {
                 font-family: 'Barlow', sans-serif;
                 font-weight: 600;
                 font-size: 26px;
                 padding-right: 30px;
+                text-align: end;
             }
 
             .form-control {
@@ -37,7 +38,7 @@
             }
 
             .btnAdd {
-                margin-top: 10vh;
+                margin-top: 5vh;
                 background-color: #EC3718 !important;
                 color: #fff !important;
                 padding-left: 20px !important;
@@ -60,9 +61,8 @@
     <body>
         <%@include file="../../components/headerAdmin.jsp" %>
         <%@include file="../../components/sidebarAdmin.jsp" %>
-        <!-- Contenido de la página -->
-        <div style="margin-left: 100px; padding: 20px; min-width: 100vh;">
-            <form action="${pageContext.request.contextPath}/createDish" method="post" enctype="multipart/form-data">
+        <div style="margin-left: 100px; padding: 20px; min-width: 100vh;  height: 100vh; align-content: center;">
+            <form action="/foodflow/createCategory" method="POST" enctype="multipart/form-data">
                 <div class="d-flex justify-content-start align-items-center">
                     <div class="col-4 text-end mt-3">
                         <p class="font">Nombre:</p>
@@ -71,6 +71,21 @@
                         <input class="form-control" type="text" name="txt_nombre" id="txt_nombre" required>
                     </div>
                 </div>
+                <!--                 <div class="d-flex justify-content-start  " style="padding-left: 3px;">
+                                    <div class="col-4 text-end">
+                                        <p class="font">Imagen:</p>
+                                    </div>
+                                   <div class="col-4 ms-2">
+                                        <div class="input-group mb-3" style="position: relative;">
+                                            <input type="file" accept=".jpg,.png" class="form-control formImg" name="image" id="image" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2;" required>
+                                            <div class="input-group-prepend" style="border: 1px solid #EC3718; border-radius: 0px; height: 40px; width: 459px; display: flex; align-items: center;">
+                                                <span class="input-group-text" style="background-color: transparent; border: none; margin-left: auto">
+                                                    <img src="assets/icons/upload.png" alt="Icono de subir" style="width: 24px; height: 24px;">
+                                                </span>
+                                                <span class="input-group-text" style="background-color: transparent; border: none;"></span>
+                                            </div>
+                                        </div>
+                                    </div>-->
                 <div class="d-flex justify-content-start">
                     <div class="col-4 text-end">
                         <p class="font">Imagen:</p>
@@ -79,60 +94,6 @@
                         <div class="input-group mb-3">
                             <input type="file" class="form-control formImg" name="txt_imagen" id="txt_imagen" accept=".jpg,.png" required>
                         </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start">
-                    <div class="col-4 text-end">
-                        <p class="font">Descripción:</p>
-                    </div>
-                    <div class="col-4 ms-2">
-                        <textarea class="form-control" rows="3" name="txt_descripcion" id="txt_descripcion" required></textarea>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start mt-3">
-                    <div class="col-4 text-end">
-                        <p class="font">Precio unitario:</p>
-                    </div>
-                    <div class="col-4 ms-2">
-                        <input class="form-control" type="number" name="txt_precio_unitario" id="txt_precio_unitario" required>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start">
-                    <div class="col-4 text-end">
-                        <p class="font">Categoria:</p>
-                    </div>
-                    <div class="col-4 ms-2">                        
-                        <select class="form-select" name="txt_categoria_id" id="txt_categoria_id" required>
-                            <option selected disabled value="">Seleccione una categoría</option>
-                            <%
-                                ArrayList<CategoriaModel> listaCategorias = (ArrayList<CategoriaModel>) request.getAttribute("categorias");
-
-                                if (listaCategorias != null && !listaCategorias.isEmpty()) {
-                                    for (CategoriaModel categoria : listaCategorias) {
-                            %>
-                            <option value="<%= categoria.getId()%>"><%= categoria.getNombre()%></option>
-                            <%
-                                }
-                            } else {
-                            %>
-                            <tr>
-                                <td colspan="7">No hay categorias registrados.</td>
-                            </tr>
-                            <%
-                                }
-                            %>
-                        </select>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start">
-                    <div class="col-4 text-end">
-                        <p class="font">Disponibilidad:</p>
-                    </div>
-                    <div class="col-4 ms-2">
-                        <select class="form-select" name="txt_disponibilidad" id="txt_disponibilidad" required>
-                            <option selected value="1">Activo</option>
-                            <option value="2">Inactivo</option>
-                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -149,7 +110,7 @@
                             <h5 class="modal-title">Creado</h5>
                         </div>
                         <div class="modal-body">
-                            <p>¡Platillo creado con éxito!.</p>
+                            <p>¡Categoría creada con éxito!.</p>
                         </div>
                     </div>
                 </div>
@@ -168,10 +129,11 @@
                     modal.style.display = "block";
 
                     setTimeout(() => {
-                        window.location.href = "<%= request.getContextPath() %>/platillos";
+                        window.location.href = "<%= request.getContextPath() %>/categoryDish";
                     }, 2000);
                 }
             });
         </script>
     </body>
 </html>
+

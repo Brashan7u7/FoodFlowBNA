@@ -10,7 +10,7 @@ public class ConnectionBD {
     public ConnectionBD (){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conection = DriverManager.getConnection("jdbc:mysql://localhost:3306/foodflow","root","");
+            conection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurante","root","");
        
         } catch (Exception e) {
             System.err.println("El error está en la conexión: "+e);

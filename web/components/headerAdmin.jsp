@@ -40,13 +40,17 @@
         </style>
     </head>
     <body>
-            <nav class="navbar navbar-expand-sm navbar-white bg-white">
-                <div class="container d-flex justify-content-center">
-                    <a class="navbar-brand" href="#">
-                        <img src="../../assets/FoodFlow Logo.png" class="logo" alt="LOGO">
-                    </a>
-                </div>
-            </nav>
-            <hr class="custom-hr">
+        <nav class="navbar navbar-expand-sm navbar-white bg-white">
+            <div class="container d-flex justify-content-center">
+                <a class="navbar-brand" href="#">
+                    <img 
+                        src="./assets/FoodFlow Logo.png" 
+                        class="logo" 
+                        alt="LOGO"
+                    >
+                </a>
+            </div>
+        </nav>
+        <hr class="custom-hr">
     </body>
 </html>
