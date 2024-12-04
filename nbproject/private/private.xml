@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/dishhhhhhhhhhh/dishServlet-main/dishServlet-main/web/pages/admin/createDish.jsp</file>
-            <file>file:/D:/dishhhhhhhhhhh/dishServlet-main/dishServlet-main/src/java/controller/BebidaCreate.java</file>
-            <file>file:/D:/dishhhhhhhhhhh/dishServlet-main/dishServlet-main/src/java/controller/PlatilloCreate.java</file>
-            <file>file:/D:/dishhhhhhhhhhh/dishServlet-main/dishServlet-main/web/pages/admin/createBeb.jsp</file>
+            <file>file:/D:/dishhhhhhhhhhh/dishServlet-main/dishServlet-main/src/java/controller/BebEdit.java</file>
+            <file>file:/D:/dishhhhhhhhhhh/dishServlet-main/dishServlet-main/web/pages/admin/editCat.jsp</file>
+            <file>file:/D:/dishhhhhhhhhhh/dishServlet-main/dishServlet-main/web/pages/admin/editBeb.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -116,6 +116,7 @@ public class BebidaCreate extends HttpServlet {
     @Override
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+    
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
 
@@ -130,9 +131,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
 
     try {
         // Obtener datos del formulario
-        String nombre = request.getParameter("nombre");
-        String descripcion = request.getParameter("descripcion");
-        String precio_unitario = request.getParameter("precio");
+        String nombre = request.getParameter("txt_nombre");
+        String descripcion = request.getParameter("txt_descripcion");
+        String precio_unitario = request.getParameter("txt_precio");
         String categoria_id = request.getParameter("categoria");
         String disponibilidad = request.getParameter("disponibilidad");
 
@@ -141,16 +142,20 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         boolean disponibilidadFinal = disponibilidad.equals("1");
 
         // Manejo del archivo de imagen
-        Part part = request.getPart("img");
+        Part part = request.getPart("image");
         String fileName = getFileName(part);
         String filePath = uploadFilePath + File.separator + fileName;
         part.write(filePath);
 
         String relativePath = UPLOAD_DIR + "/" + fileName;
+        
+       
+
 
         // Guardar datos en la base de datos
         String sql = "INSERT INTO bebidas (nombre, imagen, descripcion, precio_unitario, categoria_id, disponibilidad) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
+        
 
         try (Connection conn = conexion.getConnectionBD();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -201,3 +206,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     }// </editor-fold>
 
 }
+
+
+
+

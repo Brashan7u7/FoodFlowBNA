@@ -19,10 +19,10 @@ import java.nio.file.Paths;    // Para manipular las rutas de archivos
 @WebServlet("/pages/admin/editCat")
 public class CatEdit extends HttpServlet {
 
-    Connection conn;
-    PreparedStatement ps;
-    Statement statement;
-    ResultSet rs;
+        Connection conn;
+        PreparedStatement ps;
+        Statement statement;
+        ResultSet rs;
 
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

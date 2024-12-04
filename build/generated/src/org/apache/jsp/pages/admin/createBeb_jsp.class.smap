@@ -1,0 +1,26 @@
+SMAP
+createBeb_jsp.java
+JSP
+*S JSP
+*F
++ 0 createBeb.jsp
+pages/admin/createBeb.jsp
++ 1 headerAdmin.jsp
+pages/admin/../../components/headerAdmin.jsp
++ 2 sidebarAdmin.jsp
+pages/admin/../../components/sidebarAdmin.jsp
+*L
+1,51:52
+5#1,49:103
+51#0,2:151
+5#2,114:153
+52#0,60:266
+112,5:327
+116:332
+117:333,6
+118:339
+119,3:341
+121,5:344
+126,2:350
+127,40:352
+*E
