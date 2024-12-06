@@ -42,13 +42,14 @@ public class ViewCatServlet extends HttpServlet {
         // Lista para almacenar las categorías obtenidas de la base de datos
         ArrayList<CategoriaModel> listaCategorias = new ArrayList<>();
 // Obtener las categorías de la base de datos
-        try ( Connection conn = new ConnectionBD().getConnectionBD();  PreparedStatement ps = conn.prepareStatement("SELECT id, nombre, imagen FROM categorias_bebidas");  ResultSet rs = ps.executeQuery()) {
+        try ( Connection conn = new ConnectionBD().getConnectionBD();  PreparedStatement ps = conn.prepareStatement("SELECT id, nombre, imagen, estatus FROM categorias_bebidas");  ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 CategoriaModel categoria = new CategoriaModel();
                 categoria.setId(rs.getInt("id"));
                 categoria.setNombre(rs.getString("nombre"));
                 categoria.setImagen(rs.getString("imagen"));
+                categoria.setEstatus(rs.getString("estatus"));
                 listaCategorias.add(categoria);
             }
             request.setAttribute("categorias", listaCategorias);

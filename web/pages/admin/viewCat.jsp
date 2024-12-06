@@ -66,7 +66,7 @@
         <div style="margin-left: 100px; padding: 20px; min-width: 100vh;">
             <div class="row">
                 <div class="col-7">
-                    <h4>Categoría</h4>
+                    <h4>Categorías</h4>
                     <p>
                         <%= LocalDate.now().format(DateTimeFormatter.ofPattern("EEEE d MMM, yyyy"))%>
                     </p>
@@ -77,13 +77,13 @@
                             Tipo
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Platillos</a></li>
-                            <li><a class="dropdown-item" href="#">Bebidas</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/categoryDish">Platillos</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/pages/admin/viewCat">Bebidas</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-3">
-                    <h4>Bienvenido: Juan</h4>
+                    <h4>Bienvenido</h4>
                 </div>
             </div>
             <div class="fieldset">
@@ -101,6 +101,7 @@
                             <tr>
                                 <th scope="col">No.</th>
                                 <th scope="col">Nombre</th>
+                                <th scope="col">Estatus</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
@@ -111,8 +112,9 @@
                                     for (CategoriaModel categoria : listaCategorias) {
                             %>
                             <tr onclick="window.location.href = '/foodflow/pages/admin/editCat?id=<%= categoria.getId()%>'">
-                                <th scope="row"><%= categoria.getId()%></th>
-                                <td><%= categoria.getNombre()%></td>
+                                <th scope="row" class="col-2"><%= categoria.getId()%></th>
+                                <td class="col-6"><%= categoria.getNombre()%></td>
+                                <td class="col-2"><%= categoria.getEstatus()%></td>
                             </tr>
                             <%
                                 }

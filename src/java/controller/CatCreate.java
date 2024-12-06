@@ -30,42 +30,32 @@ public class CatCreate extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        // Crear directorio para subir imágenes si no existe
         String applicationPath = request.getServletContext().getRealPath("");
         String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
         File uploadDir = new File(uploadFilePath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
-
         try {
-            // Obtener el nombre de la categoría
             String nombre = request.getParameter("txt_nombre");
-
-            // Manejo del archivo de imagen
-            Part part = request.getPart("image");
+            Part part = request.getPart("txt_imagen");
             String fileName = getFileName(part);
             String filePath = uploadFilePath + File.separator + fileName;
             part.write(filePath);
-
-            // Ruta relativa para guardar en la base de datos
             String relativePath = UPLOAD_DIR + "/" + fileName;
 
-            // Guardar datos en la base de datos
             if (saveCategoryToDatabase(nombre, relativePath)) {
-                // Redirigir al servlet que maneja la vista de categorías (GET)
-                response.sendRedirect(request.getContextPath() + "/pages/admin/viewCat");
+                request.setAttribute("success", true);
+                request.getRequestDispatcher("/pages/admin/CreateCat.jsp").forward(request, response);
             } else {
-                // En caso de error, mostrar mensaje en la misma página
-                request.setAttribute("message", "Error al crear la categoría.");
-                request.getRequestDispatcher("/pages/admin/viewCat").forward(request, response);
+                request.setAttribute("success", true);
+                request.getRequestDispatcher("/pages/admin/CreateCat.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            // Manejar errores y redirigir a la vista con un mensaje
-            request.setAttribute("message", "Error al procesar la solicitud: " + e.getMessage());
-            request.getRequestDispatcher("/pages/admin/viewCat").forward(request, response);
+            request.setAttribute("success", true);
+            request.getRequestDispatcher("/pages/admin/CreateCat.jsp").forward(request, response);
         }
     }
 

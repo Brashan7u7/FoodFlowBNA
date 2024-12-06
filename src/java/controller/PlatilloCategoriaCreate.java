@@ -29,7 +29,7 @@ public class PlatilloCategoriaCreate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/pages/admin/CreateCat.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/admin/createCatDish.jsp").forward(request, response);
     }
     
     @Override
@@ -55,16 +55,16 @@ public class PlatilloCategoriaCreate extends HttpServlet {
 
             if (saveCategoryToDatabase(nombre, relativePath)) {
                 request.setAttribute("success", true);
-                request.getRequestDispatcher("/pages/admin/CreateCatDish.jsp").forward(request, response);
+                request.getRequestDispatcher("/pages/admin/createCatDish.jsp").forward(request, response);
             } else {
                 request.setAttribute("success", true);
-                request.getRequestDispatcher("/pages/admin/CreateCatDish.jsp").forward(request, response);
+                request.getRequestDispatcher("/pages/admin/createCatDish.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("success", true);
-            request.getRequestDispatcher("/pages/admin/CreateCatDish.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/admin/createCatDish.jsp").forward(request, response);
         }
     }
 

@@ -18,10 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.CategoriaModel;
 
-/**
- * Servlet para gestionar la visualización de categorías. Obtiene las categorías
- * desde la base de datos y las envía a la vista JSP.
- */
+
 @WebServlet("/categoryDish")
 public class PlatilloCategoria extends HttpServlet {
 
@@ -54,8 +51,6 @@ public class PlatilloCategoria extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("error", "Error al cargar categorías: " + e.getMessage());
         }
-
-        // Redirigir a la vista JSP
         request.getRequestDispatcher("/pages/admin/viewCatDish.jsp").forward(request, response);
     }
 

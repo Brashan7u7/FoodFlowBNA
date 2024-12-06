@@ -58,6 +58,14 @@
                 padding-top: 0px !important;
                 padding-bottom: 0px !important;
             }
+            
+            tr {
+                cursor: pointer;
+            }
+
+            tr:hover {
+                background-color: #fff;
+            }
         </style>
     </head>
     <body>
@@ -82,7 +90,7 @@
                 </div>      
                 
                 <div class="col-3">
-                    <h4>Bienvenido: Juan</h4>
+                    <h4>Bienvenido</h4>
                 </div>
             </div>
             <div class="fieldset">
@@ -93,7 +101,7 @@
                     
                     <div class="col-2"></div>
                     <div class="col-2">
-                        <a href="${pageContext.request.contextPath}/pages/admin/agregarClienteF.jsp"><button type="button" class="btn btnAdd w-100">Agregar</button></a>
+                        <a href="${pageContext.request.contextPath}/clienteFcreate"><button type="button" class="btn btnAdd w-100">Agregar</button></a>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -113,7 +121,7 @@
                                 if (clientes != null && !clientes.isEmpty()) {
                                     for (ClienteFModel cliente : clientes) {
                             %>
-                            <tr> 
+                            <tr onclick="window.location.href = '/foodflow/clienteFupdate?id=<%= cliente.getId()%>'"> 
                                 <th scope="row"><%= cliente.getId() %></th>
                                 <td><%= cliente.getNombre() %></td>
                                 <td><%= cliente.getTelefono() %></td>

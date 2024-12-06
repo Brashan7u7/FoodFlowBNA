@@ -24,6 +24,7 @@
                 color: black;
                 display: flex;
                 flex-direction: column;
+                z-index: 1000;
             }
 
             /* Estilo del sidebar cuando está abierto */
@@ -86,27 +87,27 @@
             
             <!-- Opciones del sidebar -->
             <div class="sidebar-option">
-                <img src="./assets/icons/search.png" class="logo" alt="LOGO">
+                <img src="../../assets/icons/search.png" class="logo" alt="LOGO" onerror="fallbackImage(this, './assets/icons/search.png')">
                 <span class="option-text">Buscar</span>
             </div>
-            <div class="sidebar-option">
-                <img src="./assets/icons/user.png" alt="Opción 2">
+            <div class="sidebar-option" onclick="window.location.href = '/foodflow/usuariosservlet'">
+                <img src="../../assets/icons/user.png" alt="Opción 2" onerror="fallbackImage(this, './assets/icons/user.png')">
                 <span class="option-text">Usuarios</span>
             </div>
             <div class="sidebar-option" onclick="window.location.href = '/foodflow/platillos'">
-                <img src="./assets/icons/platillos.png" alt="Opción 3">
+                <img src="../../assets/icons/platillos.png" alt="Opción 3" onerror="fallbackImage(this, './assets/icons/platillos.png')">
                 <span class="option-text">Platillos</span>
             </div>
             <div class="sidebar-option" onclick="window.location.href = '/foodflow/categoryDish'">
-                <img src="./assets/icons/category.png" alt="Opción 4">
+                <img src="../../assets/icons/category.png" alt="Opción 4" onerror="fallbackImage(this, './assets/icons/category.png')">
                 <span class="option-text">Categorías</span>
             </div>
-            <div class="sidebar-option">
-                <img src="./assets/icons/ventas.png" alt="Opción 4">
+            <div class="sidebar-option" onclick="window.location.href ='/foodflow/pages/admin/vistaventas.jsp'">
+                <img src="../../assets/icons/ventas.png" alt="Opción 5" onerror="fallbackImage(this, './assets/icons/ventas.png')">
                 <span class="option-text">Ventas</span>
             </div>
-            <div class="sidebar-option">
-                <img src="./assets/icons/fidelidad.png" alt="Opción 5">
+            <div class="sidebar-option" onclick="window.location.href ='/foodflow/clienteFview'">
+                <img src="../../assets/icons/fidelidad.png" alt="Opción 6" onerror="fallbackImage(this, './assets/icons/fidelidad.png')">
                 <span class="option-text">Fidelidad</span>
             </div>
         </div>
@@ -115,6 +116,10 @@
             // Función para abrir/cerrar el sidebar
             function toggleSidebar() {
                 document.getElementById("mySidebar").classList.toggle("open");
+            }
+            
+            function fallbackImage(imgElement, fallbackSrc) {
+                imgElement.src = fallbackSrc;
             }
         </script>
     </body>

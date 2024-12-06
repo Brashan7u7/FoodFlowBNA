@@ -45,6 +45,17 @@
                 padding-right: 20px !important;
                 box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
             }
+            
+            .modal {
+                margin-top: 35vh !important;
+                margin-left: 8vh !important;
+                display: none;
+            }
+            
+            .modal-dialog {
+                border: 4px solid #EC3718 !important;
+                border-radius: 10px;
+            }
         </style>
     </head>
     <body>
@@ -59,20 +70,20 @@
                         <p class="font">Nombre:</p>
                     </div>
                     <div class="col-4 ms-2">
-                        <input class="form-control" type="text" name="txt_nombre" id="txt_nombre">
+                        <input class="form-control" type="text" name="txt_nombre" id="txt_nombre" required>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-start  " style="padding-left: 3px;">
+<!--                <div class="d-flex justify-content-start  " style="padding-left: 3px;">
                     <div class="col-4 text-end">
                         <p class="font">Imagen:</p>
                     </div>
                     <div class="col-4 ms-2">
                         <div class="input-group mb-3" style="position: relative;">
-                            <!-- Input de archivo con borde rojo y con visibilidad oculta -->
+                             Input de archivo con borde rojo y con visibilidad oculta 
                             <input type="file" class="form-control formImg" name="image" id="image" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2;" onchange="updateFileName()">
 
-                            <!-- Contenedor para el borde rojo y el icono dentro -->
+                             Contenedor para el borde rojo y el icono dentro 
                             <div class="input-group-prepend" style="border: 1px solid #EC3718; border-radius: 0px; height: 40px; width: 459px; display: flex; align-items: center;">
                                 <span class="input-group-text" style="background-color: transparent; border: none; margin-left: auto">
                                     <img src="../../assets/icons/upload.png" alt="Icono de subir" style="width: 24px; height: 24px;">
@@ -81,15 +92,37 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
+                <div class="d-flex justify-content-start">
+                    <div class="col-4 text-end">
+                        <p class="font">Imagen:</p>
+                    </div>
+                    <div class="col-4 ms-2">
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control formImg" name="txt_imagen" id="txt_imagen" accept=".jpg,.png" required>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 offset-md-5">
                         <button type="submit" class="btn btnAdd">Agregar</button>
                     </div>
                 </div>
-
             </form>
+            <!-- Modal de Éxito -->
+            <div id="successModal" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Creado</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>¡Categoría creada con éxito!.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script>
@@ -99,6 +132,18 @@
                 const fileName = fileInput.files[0] ? fileInput.files[0].name : ''; // Obtener el nombre del archivo
                 fileInput.value = fileName; // Actualizar el valor del input de imagen con el nombre del archivo
             }
+            
+            document.addEventListener("DOMContentLoaded", function () {
+                const success = <%= request.getAttribute("success") != null ? "true" : "false" %>;
+                if (success) {
+                    const modal = document.getElementById("successModal");
+                    modal.style.display = "block";
+
+                    setTimeout(() => {
+                        window.location.href = "<%= request.getContextPath() %>/pages/admin/viewCat";
+                    }, 2000);
+                }
+            });
         </script>
 
     </body>

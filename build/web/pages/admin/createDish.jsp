@@ -94,7 +94,7 @@
                         <p class="font">Precio unitario:</p>
                     </div>
                     <div class="col-4 ms-2">
-                        <input class="form-control" type="number" name="txt_precio_unitario" id="txt_precio_unitario" required>
+                        <input class="form-control" type="number" name="txt_precio_unitario" id="txt_precio_unitario" min="1" title="Ingresa una cantidad positiva" required>
                     </div>
                 </div>
                 <div class="d-flex justify-content-start">

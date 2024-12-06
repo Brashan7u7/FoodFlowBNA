@@ -48,7 +48,7 @@ public class PlatilloCategoriaEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/pages/admin/editCat.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/admin/editCatDish.jsp").forward(request, response);
     }
 
      @Override

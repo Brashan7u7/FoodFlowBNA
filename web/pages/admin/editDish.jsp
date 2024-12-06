@@ -179,7 +179,7 @@
                         <p class="font">Precio unitario:</p>
                     </div>
                     <div class="col-4 ms-2">
-                        <input class="form-control" type="number" value="<%=precio_unitario%>" name="txt_precio_unitario" id="txt_precio_unitario" required>
+                        <input class="form-control" type="number" value="<%=precio_unitario%>" name="txt_precio_unitario" id="txt_precio_unitario" min="1" title="Ingresa una cantidad positiva" required>
                     </div>
                 </div>
                 <div class="d-flex justify-content-start">
@@ -231,7 +231,6 @@
                     </div>
                 </div>
             </form>
-            <!-- Modal -->
             <div id="messageModal" class="modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -336,7 +335,7 @@
                         method: 'DELETE'
                     }).then(response => {
                         if (response.ok) {
-                            mostrarModal("error", "¡Platillo eliminado con éxito!");
+                            mostrarModal("success", "¡Platillo eliminado con éxito!");
                             setTimeout(() => {
                                 window.location.href = "<%= request.getContextPath()%>/platillos";
                             }, 1000);

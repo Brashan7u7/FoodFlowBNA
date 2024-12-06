@@ -51,6 +51,22 @@
                 padding-right: 20px !important;
                 box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
             }
+            
+            .alert {
+                margin: 50px;
+                margin-left: 50px !important;
+            }
+            
+            .modal {
+                margin-top: 35vh !important;
+                margin-left: 8vh !important;
+                display: none;
+            }
+            
+            .modal-dialog {
+                border: 4px solid #EC3718 !important;
+                border-radius: 10px;
+            }
         </style>
     </head>
     <body>
@@ -82,7 +98,7 @@
                             <p class="font">Número de teléfono:</p>
                         </div>
                         <div class="col-4 ms-2">
-                            <input type="text" class="form-control" id="telefono" name="telefono" required>
+                            <input title="El número debe tener exactamente 10 dígitos" type="text" class="form-control" id="telefono" name="telefono" maxlength="10" pattern="\d{10}" required>
                         </div>
                     </div>    
 
@@ -91,7 +107,7 @@
                             <p class="font">Nueva Compra:</p>
                         </div>
                         <div class="col-4 ms-2">
-                            <input type="number" class="form-control" id="compras" name="compras" required>
+                            <input type="number" class="form-control" id="compras" name="compras" min="1" title="Ingresa una cantidad positiva" required>
                         </div>
                     </div>  
 
@@ -101,11 +117,23 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <button type="submit" class="btn btnAdd mx-2">Guardar</button>
-                            <a href="${pageContext.request.contextPath}/pages/admin/mostrarClienteF.jsp" class="btn btnAdd mx-2">Cancelar</a>
+                            <a href="${pageContext.request.contextPath}/clienteFview" class="btn btnAdd mx-2">Cancelar</a>
                         </div>
                     </div>
-
                 </form>
+                <!-- Modal de Éxito -->
+                <div id="successModal" class="modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Creado</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>¡Cliente registrado con éxito!.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -120,11 +148,23 @@
             }
         %>
 
-        <script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>    
             function toggleSidebar() {
                 document.getElementById("mySidebar").classList.toggle("open");
             }
+            
+            document.addEventListener("DOMContentLoaded", function () {
+                const success = <%= request.getAttribute("success") != null ? "true" : "false" %>;
+                if (success) {
+                    const modal = document.getElementById("successModal");
+                    modal.style.display = "block";
+
+                    setTimeout(() => {
+                        window.location.href = "<%= request.getContextPath() %>/clienteFview";
+                    }, 2000);
+                }
+            });
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html>

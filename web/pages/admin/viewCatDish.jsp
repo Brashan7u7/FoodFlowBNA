@@ -78,7 +78,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/categoryDish">Platillos</a></li>
-                            <li><a class="dropdown-item" href="#">Bebidas</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/pages/admin/viewCat">Bebidas</a></li>
                         </ul>
                     </div>
                 </div>

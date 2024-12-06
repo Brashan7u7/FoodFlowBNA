@@ -84,7 +84,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/platillos">Platillos</a></li>
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/bebida">Bebidas</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/bebidas">Bebidas</a></li>
                         </ul>
                     </div>
                 </div>

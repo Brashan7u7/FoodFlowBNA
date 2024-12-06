@@ -4,12 +4,16 @@
  */
 package controller;
 
+import com.google.gson.Gson;
+import configuration.ConnectionBD;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +28,10 @@ import model.ClienteFModel;
 @WebServlet(name = "ClienteFUpdate", urlPatterns = {"/clienteFupdate"})
 public class ClienteFUpdate extends HttpServlet {
 
+    Connection conn;
+    PreparedStatement ps;
+    Statement statement;
+    ResultSet rs;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,88 +75,104 @@ public class ClienteFUpdate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idParam = request.getParameter("id"); // Se espera el parámetro `id`
-
-        if (idParam == null || idParam.isEmpty()) {
-            // Si no se proporciona ID, mostrar un error
-            request.setAttribute("error", "Debe proporcionar un ID válido para buscar al cliente.");
-            request.getRequestDispatcher("/pages/admin/mostrarClienteF.jsp").forward(request, response);
-            return;
-        }
-
-        try ( Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
-            // Consulta SQL para buscar al cliente por ID
-            String query = "SELECT * FROM clientes_fidelidad WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, Integer.parseInt(idParam));
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                // Si se encuentra el cliente, crear un objeto ClienteFModel
-                ClienteFModel cliente = new ClienteFModel(
-                        resultSet.getInt("id"),
-                        resultSet.getString("nombre"),
-                        resultSet.getString("telefono"),
-                        resultSet.getInt("compras")
-                );
-
-                // Enviar el cliente al JSP de actualización
-                request.setAttribute("cliente", cliente);
-                request.getRequestDispatcher("/pages/admin/updateClienteF.jsp").forward(request, response);
-            } else {
-                // Si no se encuentra el cliente
-                request.setAttribute("error", "Cliente no encontrado con el ID proporcionado.");
-                request.getRequestDispatcher("/pages/admin/mostrarClienteF.jsp").forward(request, response);
-            }
-        } catch (Exception e) {
-            // Manejo de errores
-            request.setAttribute("error", "Error al buscar cliente: " + e.getMessage());
-            request.getRequestDispatcher("/pages/admin/mostrarClienteF.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("/pages/admin/updateClienteF.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Recuperar los parámetros enviados desde el formulario
-        String idParam = request.getParameter("id");
-        String nombre = request.getParameter("nombre");
-        String telefono = request.getParameter("telefono");
-        String comprasParam = request.getParameter("compras");
-
-        if (idParam == null || nombre == null || telefono == null || comprasParam == null) {
-            request.setAttribute("error", "Todos los campos son obligatorios.");
-            request.getRequestDispatcher("/pages/admin/updateClienteF.jsp").forward(request, response);
-            return;
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        ConnectionBD conexion = new ConnectionBD();
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try (BufferedReader reader = request.getReader()) {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
         }
+        Gson gson = new Gson();
+        String json = sb.toString();
+        String decodedJson = URLDecoder.decode(json, "UTF-8");
+        ClienteFModel cliente = gson.fromJson(decodedJson, ClienteFModel.class);
+        
+        String sql = "UPDATE clientes_fidelidad SET nombre = ?, telefono = ?, compras = ? WHERE id = ?";
+        try {
+            conn = conexion.getConnectionBD();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getTelefono()); 
+            ps.setInt(3, cliente.getCompras());
+            ps.setInt(4, cliente.getId());
 
-        try ( Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
-            // Consulta SQL para actualizar el cliente
-            String query = "UPDATE clientes_fidelidad SET nombre = ?, telefono = ?, compras = ? WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, nombre);
-            statement.setString(2, telefono);
-            statement.setInt(3, Integer.parseInt(comprasParam));
-            statement.setInt(4, Integer.parseInt(idParam));
-
-            int rowsUpdated = statement.executeUpdate();
-
-            if (rowsUpdated > 0) {
-                // Redirigir al listado con mensaje de éxito
-                request.setAttribute("success", "Cliente actualizado correctamente.");
-                request.getRequestDispatcher("/pages/admin/mostrarClienteF.jsp").forward(request, response);
+            int filasActualizadas = ps.executeUpdate();
+            response.setContentType("text/plain");
+            if (filasActualizadas > 0) {
+                request.setAttribute("success", true);
+                request.getRequestDispatcher("/pages/admin/updateClienteF.jsp").forward(request, response);
             } else {
-                // Manejo de caso donde no se actualiza ninguna fila
-                request.setAttribute("error", "No se pudo actualizar el cliente. Verifique el ID.");
                 request.getRequestDispatcher("/pages/admin/updateClienteF.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            // Manejo de errores
-            request.setAttribute("error", "Error al actualizar cliente: " + e.getMessage());
-            request.getRequestDispatcher("/pages/admin/updateClienteF.jsp").forward(request, response);
+            e.printStackTrace();
+                request.getRequestDispatcher("/pages/admin/updateClienteF.jsp").forward(request, response);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }   
+    }
+    
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ConnectionBD conexion = new ConnectionBD();
+        String id = request.getParameter("id");
+        
+        if (id == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        
+        int idFinal = 0;
+        idFinal = Integer.parseInt(id); 
+                
+        String sql = "DELETE FROM clientes_fidelidad WHERE id like ?";
+
+        try {
+            conn = conexion.getConnectionBD();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idFinal);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                response.setStatus(HttpServletResponse.SC_OK); 
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND); 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); 
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-
+    
     @Override
     public String getServletInfo() {
         return "Servlet para actualizar clientes fidelizados";

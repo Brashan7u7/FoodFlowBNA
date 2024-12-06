@@ -61,22 +61,23 @@
     <body>
         <%@include file="../components/header.jsp" %>
         <div class="login-container">
-            <form>
+            <form action="${pageContext.request.contextPath}/login" method="post">
                 <div style="text-align: center">
-                    <img src="../assets/FoodFlow Logo.png" style="width: 350px; height: 200px; margin-bottom: 15px" class="logo" alt="LOGO">
+                    <img src="../assets/FoodFlow Logo.png" style="width: 350px; height: 200px; margin-top:25px; margin-bottom: 25px" class="logo" alt="LOGO">
                 </div>
                 <div class="mb-3">
-                    <label for="username" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" id="username" placeholder="Ingresa tu usuario">
+                    <label for="correo" class="form-label">Correo</label>
+                    <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingresa tu correo">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
+                    <input type="password" id="pin" name="pin" class="form-control" placeholder="Ingresa tu contraseña">
                 </div>
+                
+                
                 <div class="button-container">
-                    <button onclick="redirigir(event)" class="btn btn-orange" style="background-color: #EC3718; color: white;">Iniciar Sesión</button>
+                    <button class="btn btn-orange" style="background-color: #EC3718; color: white;">Iniciar Sesión</button>
                 </div>
-
             </form>
         </div>
     </body>

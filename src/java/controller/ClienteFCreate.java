@@ -20,6 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ClienteFCreate", urlPatterns = {"/clienteFcreate"})
 public class ClienteFCreate extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/pages/admin/agregarClienteF.jsp").forward(request, response);
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -67,15 +72,15 @@ public class ClienteFCreate extends HttpServlet {
 
                 int filasInsertadas = ps.executeUpdate();
                 if (filasInsertadas > 0) {
-                    // Redirigir en caso de éxito
-                    response.sendRedirect(request.getContextPath() + "/clienteFview");
+                    request.setAttribute("success", true);
+            request.getRequestDispatcher("/pages/admin/agregarClienteF.jsp").forward(request, response);
                 } else {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al registrar el cliente.");
                 }
             }
         } catch (SQLIntegrityConstraintViolationException e) {
             // Si ocurre un error por duplicado, enviar el mensaje al JSP
-            request.setAttribute("errorMessage", "El teléfono ingresado ya está registrado. Intente con otro.");
+            request.setAttribute("errorMessage", "Cliente ya registrado en el programa de fidelidad.");
             request.getRequestDispatcher("pages/admin/agregarClienteF.jsp").forward(request, response);
 
         } catch (SQLException e) {

@@ -43,14 +43,23 @@
         <nav class="navbar navbar-expand-sm navbar-white bg-white">
             <div class="container d-flex justify-content-center">
                 <a class="navbar-brand" href="#">
-                    <img 
-                        src="./assets/FoodFlow Logo.png" 
-                        class="logo" 
-                        alt="LOGO"
+                    <img
+                    id="logo"
+                    src="../../assets/FoodFlow Logo.png"
+                    class="logo"
+                    alt="LOGO"
+                    onerror="fallbackLogo()"
                     >
                 </a>
             </div>
         </nav>
         <hr class="custom-hr">
+        <script>
+            function fallbackLogo() {
+                const logo = document.getElementById('logo');
+                logo.src = './assets/FoodFlow Logo.png';
+            }
+            
+        </script>
     </body>
 </html>

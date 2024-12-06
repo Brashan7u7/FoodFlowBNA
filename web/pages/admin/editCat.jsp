@@ -21,6 +21,14 @@
                 padding-right: 30px;
             }
 
+            .btnUpdateImg {
+                margin: 40px;
+                background-color: #EC3718 !important;
+                color: #fff !important;
+                width: 175px !important;
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+            }
+            
             .form-control, .form-select {
                 border-color: #EC3718 !important;
                 border-radius: 0 !important;
@@ -31,12 +39,33 @@
                 background-color: #EC3718 !important;
                 color: #fff !important;
                 width: 120px !important;
+                margin-left: 20vh;
                 box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
             }
 
             .imgCategory {
                 max-width: 250px;
                 margin-bottom: 20px;
+            }
+            
+            .modal {
+                margin-top: 35vh !important;
+                margin-left: 8vh !important;
+                display: none;
+            }
+
+            .modal-dialog {
+                border: 4px solid #EC3718 !important;
+                border-radius: 10px;
+            }
+
+            .imgDish {
+                width: 250px;
+                height: 250px;
+                object-fit: cover;
+                margin: 0 auto;
+                display: block;
+                margin-bottom: 2vh;
             }
         </style>
     </head>
@@ -84,138 +113,129 @@
                 }
             %>
             
-            <div class="d-flex justify-content-start align-items-center">
-                <div class="col-4 text-end mt-3">
-                    <p class="font">Nombre(s):</p>
+            <form action="${pageContext.request.contextPath}/pages/admin/editCat" method="post">
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="col-4 text-end mt-3">
+                        <p class="font">Nombre(s):</p>
+                    </div>
+                    <div class="col-4 ms-2">
+                        <input class="form-control" id="txt_nombre" type="text" name="nombre" value="<%= nombre%>">
+                    </div>
                 </div>
-                <div class="col-4 ms-2">
-                    <input class="form-control" id="txt_nombre" type="text" name="nombre" value="<%= nombre%>">
-                </div>
-            </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-4 text-end">
-                    <p class="font">Imagen:</p>
-                </div>
-                <div class="col-4 ms-2">
-                    <div class="row">
-                        <div class="col-7">
-                            <img src="<%= request.getContextPath() + "/" + imagen%>" name="imagen" style="width: 370px; height: 211px;" class="imgCategory" alt="Categoría"/>
-                        </div>
-                        <div class="col-5" s>
-                            <!-- Botón para actualizar la imagen -->
-                            <button onclick="seleccionarImagen()" class="btn btnAction">Actualizar imagen</button>
-                            <!-- Input oculto para seleccionar la imagen -->
-                            <input type="file" id="txt_imagen" name="txt_imagen" class="form-control" style="display:none" onchange="mostrarImagen()">
+                <div class="d-flex justify-content-start">
+                    <div class="col-4 text-end">
+                        <p class="font">Imagen:</p>
+                    </div>
+                    <div class="col-4 ms-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <img src="<%=imagen%>" class="imgDish" alt="Platillo"/>
+                                <input type="hidden" name="imagenActual" id="imagenActual" value="<%=imagen%>" accept=".jpg,.png">
+                            </div>
+                            <div class="col-6">
+                                <label for="txt_imagen" class="btn btnUpdateImg">Actualizar Imagen <i class="bi bi-upload"></i></label>
+                                <input type="file" id="txt_imagen" name="txt_imagen" class="d-none" accept=".jpg,.png">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 offset-md-4">
-                    <button onclick="actualizarCategoria()" class="btn btnAction">Actualizar</button>
-                    <button onclick="eliminarCategoria()" class="btn btnAction">Eliminar</button>
-                    <button onclick="desactivarCategoria()" class="btn btnAction">Desactivar</button>
+                <div class="d-flex justify-content-start">
+                    <div class="col-4 text-end">
+                        <p class="font">Estatus:</p>
+                    </div>
+                    <div class="col-4 ms-2">
+                        <select class="form-select" name="txt_estatus" id="txt_estatus" required>
+                            <option value="activo" <%= estatus.equals("activo") ? "selected" : ""%>>Activo</option>
+                            <option value="inactivo" <%= estatus.equals("inactivo") ? "selected" : ""%>>Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-4">
+                        <button type="button" onclick="actualizarCategoria(<%=id%>)" class="btn btnAction">Actualizar</button>
+                    </div>
+                </div>
+            </form>
+            <div id="messageModal" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="modalTitle" class="modal-title"></h5>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modalMessage"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script>
-            function seleccionarImagen() {
-                document.getElementById("txt_imagen").click();
+            function mostrarModal(tipo, mensaje) {
+                const modal = document.getElementById("messageModal");
+                const modalTitle = document.getElementById("modalTitle");
+                const modalMessage = document.getElementById("modalMessage");
+                if (tipo === "success") {
+                    modalTitle.textContent = "¡Éxito!";
+                    modalTitle.className = "modal-title text-success";
+                } else if (tipo === "error") {
+                    modalTitle.textContent = "Error";
+                    modalTitle.className = "modal-title text-danger";
+                }
+                modalMessage.textContent = mensaje;
+                modal.style.display = "block";
+
+                setTimeout(() => {
+                    modal.style.display = "none";
+                }, 1500);
             }
 
-            function mostrarImagen() {
-                const file = document.getElementById("txt_imagen").files[0];
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.querySelector(".imgCategory");
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+            function actualizarCategoria(id) {
+                const nombre = document.getElementById("txt_nombre").value;
+                const imagenActual = document.getElementById("imagenActual").value;
+                const imagen = document.getElementById("txt_imagen").value;
+                const estatus = document.getElementById("txt_estatus").value;
 
-
-
-
-            function eliminarCategoria() {
-                const id = "<%= id%>";
-                if (confirm(`¿Estás seguro de que quieres eliminar esta categoría?`)) {
-                    fetch(`/foodflow/pages/admin/editCat?id=${id}`, {
-                        method: 'DELETE',
-                    })
-                            .then(response => {
-                                if (response.ok) {
-                                    alert("Categoría eliminada con éxito");
-                                    window.location.href = "/foodflow/pages/admin/viewCat";
-                                } else {
-                                    alert("Error al eliminar la categoría");
-                                }
-                            })
-                            .catch(error => console.error("Error:", error));
-                }
-            }
-
-            function actualizarCategoria() {
-                const id = "<%= id%>";
-                const nombre = document.getElementById("txt_nombre").value.trim();
-                const imagen = document.getElementById("txt_imagen").files[0];
-
-                if (!nombre) {
-                    alert("El nombre no puede estar vacío.");
-                    return;  // No enviar el formulario si el nombre es vacío
+                if (!nombre || !estatus) {
+                    mostrarModal("error", "Error al actualizar la categoría. Verifica los datos ingresados.");
+                    return;
                 }
 
-                const formData = new FormData();
-                formData.append("id", id);
-                formData.append("nombre", nombre);  // Asegúrate de que el valor de 'nombre' no sea vacío
-                if (imagen) {
-                    formData.append("imagen", imagen);
+                let datos;
+                if (imagen.length > 0) {
+                    const fileName = imagen.split("\\").pop();
+                    datos = {
+                        nombre: nombre,
+                        imagen: `/foodflow/images/` + fileName,
+                        estatus: estatus,
+                        id: id
+                    };
+                } else {
+                    datos = {
+                        nombre: nombre,
+                        imagen: imagenActual,
+                        estatus: estatus,
+                        id: id
+                    };
                 }
 
-                fetch(`/foodflow/pages/admin/editCat?id=${id}`, {
-                    method: 'POST',
-                    body: formData,
+                fetch(`editCat?id=` + id, {
+                    method: "PUT",
+                    body: JSON.stringify(datos),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Error al actualizar la categoría');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                alert("Categoría actualizada con éxito");
-                                window.location.href = "/foodflow/pages/admin/viewCat";
-                            } else {
-                                alert("Error al actualizar la categoría: " + data.message);
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Error:", error);
-                            alert("Hubo un error al enviar la solicitud.");
-                        });
-            }
-
-
-
-
-            function desactivarCategoria() {
-                const id = "<%= id%>";
-                if (confirm(`¿Estás seguro de que quieres desactivar esta categoría?`)) {
-                    fetch(`/foodflow/pages/admin/editCat?id=${id}`, {
-                        method: 'PUT',
-                    })
-                            .then(response => {
-                                if (response.ok) {
-                                    alert("Categoría desactivada con éxito");
-                                    location.reload();
-                                } else {
-                                    alert("Error al desactivar la categoría");
-                                }
-                            })
-                            .catch(error => console.error("Error:", error));
-                }
+                .then(() => {
+                    mostrarModal("success", "¡Categoría actualizada con éxito!");
+                    setTimeout(() => {
+                        window.location.href = "<%= request.getContextPath()%>/pages/admin/viewCat";
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    mostrarModal("error", "Hubo un problema al actualizar la categoría. Inténtalo nuevamente.");
+                });
             }
         </script>
     </body>

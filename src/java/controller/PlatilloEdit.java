@@ -7,31 +7,24 @@ package controller;
 import com.google.gson.Gson;
 import configuration.ConnectionBD;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import model.CategoriaModel;
 import model.PlatilloModel;
 
 @WebServlet("/editDish")
-//@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-//        maxFileSize = 1024 * 1024 * 10, // 10MB
-//        maxRequestSize = 1024 * 1024 * 50)
 public class PlatilloEdit extends HttpServlet {
     private static final String UPLOAD_DIR = "images";
     private static final long serialVersionUID = 1L;
