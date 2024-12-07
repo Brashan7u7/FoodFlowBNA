@@ -154,13 +154,13 @@
             <!-- Títulos -->
             <div class="row containerTop mb-4">
                 <div class="col-8">
-                    <h2>Búsqueda</h2>
+                    <h4>Búsqueda</h4>
                     <%-- Fecha inicial desde el servidor --%>
                     <p><span id="currentDate"></span></p>
                     <p><span id="currentTime"></span></p>
                 </div>
                 <div class="col-4 text-end">
-                    <h2>Bienvenido: <%= session.getAttribute("nombre") != null ? session.getAttribute("nombre") : "Invitado"%></h2>
+                    <h4>Bienvenido: <%= session.getAttribute("nombre") != null ? session.getAttribute("nombre") : "Invitado"%></h4>
                 </div>
             </div>
 

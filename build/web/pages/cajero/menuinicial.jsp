@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@page import="model.mostcategorias" %>
 <%@page import="java.util.List" %>
-<%@include file="../../components/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -69,7 +68,8 @@
         </style>
     </head>
     <body>
-        <%@include file="../../components/sidebarAdmin.jsp" %>
+        <%@include file="../../components/headerAdmin.jsp" %>
+        <%@include file="../../components/sidebarCajero.jsp" %>
         <!-- Contenedor principal -->
         <div class="container mt-4">
             <!-- Grid de imágenes dinámico -->
@@ -80,7 +80,7 @@
                     for (mostcategorias categoria : categorias) {
                         System.out.println("Mostrando categoría: " + categoria.getNombre());
                 %>
-                    <a href="/filtradoCategorias?id=<%= categoria.getId() %>">
+                    <a onclick="window.location.href = '/foodflow/filtradoCategorias?id=<%= categoria.getId()%>'">
                         <div class="grid-item">
                             <img src="<%= categoria.getImagen() %>" alt="<%= categoria.getNombre() %>">
                             <div class="overlay">

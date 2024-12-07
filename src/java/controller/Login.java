@@ -129,22 +129,23 @@ public class Login extends HttpServlet {
                     if ("administrador".equalsIgnoreCase(rol)) {
                         // Redirigir a la vista de administrador
                         response.sendRedirect(request.getContextPath() + "/pages/admin/vistaventas.jsp");
-                    } else {
-                        // Redirigir a la vista de registro
-                        response.sendRedirect(request.getContextPath() + "/pages/register.jsp");
+                    } else if ("cajero".equalsIgnoreCase(rol)){
+                        // Redirigir a la vista de cajero
+                        response.sendRedirect(request.getContextPath() + "/mostcategoriasservlet");
                     }
                 } else {
                     System.out.println("Credenciales incorrectas");
                     request.setAttribute("error", "Credenciales incorrectas");
-                    response.sendRedirect("./pages/login.jsp");
+                    response.sendRedirect("./pages/xd.jsp");
                 }
             } else {
                 System.out.println("Usuario no encontrado");
                 request.setAttribute("error", "Usuario no encontrado");
-                request.getRequestDispatcher("./pages/login.jsp").forward(request, response);
+                request.getRequestDispatcher("./pages/xdd.jsp").forward(request, response);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
+            response.sendRedirect("./pages/xd.jsp");
         }
     }
 

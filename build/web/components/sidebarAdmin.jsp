@@ -86,7 +86,7 @@
             <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
             
             <!-- Opciones del sidebar -->
-            <div class="sidebar-option">
+            <div class="sidebar-option" onclick="window.location.href = '/foodflow/busqueda'">
                 <img src="../../assets/icons/search.png" class="logo" alt="LOGO" onerror="fallbackImage(this, './assets/icons/search.png')">
                 <span class="option-text">Buscar</span>
             </div>
@@ -109,6 +109,10 @@
             <div class="sidebar-option" onclick="window.location.href ='/foodflow/clienteFview'">
                 <img src="../../assets/icons/fidelidad.png" alt="Opción 6" onerror="fallbackImage(this, './assets/icons/fidelidad.png')">
                 <span class="option-text">Fidelidad</span>
+            </div>
+            <div class="sidebar-option" onclick="window.location.href ='/foodflow/pages/login.jsp'">
+                <img src="../../assets/icons/logout.png" alt="Opción 6" onerror="fallbackImage(this, './assets/icons/logout.png')">
+                <span class="option-text">Cerrar Sesión</span>
             </div>
         </div>
 

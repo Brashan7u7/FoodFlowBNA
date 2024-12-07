@@ -54,6 +54,6 @@ public class MostCategoriasServlet extends HttpServlet {
         // Establece la lista de categorías como atributo de la solicitud
         request.setAttribute("categorias", categorias);
         // Redirige a la JSP que mostrará las categorías
-        request.getRequestDispatcher("pages/cajero/categorias.jsp").forward(request, response);
+        request.getRequestDispatcher("pages/cajero/menuinicial.jsp").forward(request, response);
     }
 }

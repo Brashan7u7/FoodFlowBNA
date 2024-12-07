@@ -217,8 +217,8 @@
                     </div>
                     <div class="col-4 ms-2">
                         <select class="form-select" name="txt_disponibilidad" id="txt_disponibilidad" required>
-                            <option selected value="1" <%= disponibilidad == true ? "selected" : "" %>>Activo</option>
-                            <option value="2" <%= disponibilidad == false ? "selected" : "" %>>Inactivo</option>
+                            <option value="true" <%= disponibilidad == true ? "selected" : "" %>>Activo</option>
+                            <option value="false" <%= disponibilidad == false ? "selected" : "" %>>Inactivo</option>
                         </select>
                     </div>
                 </div>

@@ -86,29 +86,21 @@
             <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
             
             <!-- Opciones del sidebar -->
-            <div class="sidebar-option" onclick="window.location.href = '/foodflow/busqueda'">
+            <div class="sidebar-option">
                 <img src="../../assets/icons/search.png" class="logo" alt="LOGO" onerror="fallbackImage(this, './assets/icons/search.png')">
                 <span class="option-text">Buscar</span>
             </div>
-            <div class="sidebar-option" onclick="window.location.href = '/foodflow/usuariosservlet'">
-                <img src="../../assets/icons/user.png" alt="Opción 2" onerror="fallbackImage(this, './assets/icons/user.png')">
-                <span class="option-text">Usuarios</span>
-            </div>
-            <div class="sidebar-option" onclick="window.location.href = '/foodflow/platillos'">
+            <div class="sidebar-option" onclick="window.location.href = '/foodflow/mostcategoriasservlet'">
                 <img src="../../assets/icons/platillos.png" alt="Opción 3" onerror="fallbackImage(this, './assets/icons/platillos.png')">
-                <span class="option-text">Platillos</span>
+                <span class="option-text">Menú</span>
             </div>
-            <div class="sidebar-option" onclick="window.location.href = '/foodflow/categoryDish'">
-                <img src="../../assets/icons/category.png" alt="Opción 4" onerror="fallbackImage(this, './assets/icons/category.png')">
-                <span class="option-text">Categorías</span>
-            </div>
-            <div class="sidebar-option" onclick="window.location.href ='/foodflow/pages/admin/vistaventas.jsp'">
+<!--            <div class="sidebar-option" onclick="window.location.href ='/foodflow/pages/admin/vistaventas.jsp'">
                 <img src="../../assets/icons/ventas.png" alt="Opción 5" onerror="fallbackImage(this, './assets/icons/ventas.png')">
                 <span class="option-text">Ventas</span>
-            </div>
+            </div>-->
             <div class="sidebar-option" onclick="window.location.href ='/foodflow/clienteFview'">
-                <img src="../../assets/icons/fidelidad.png" alt="Opción 6" onerror="fallbackImage(this, './assets/icons/fidelidad.png')">
-                <span class="option-text">Fidelidad</span>
+                <img src="../../assets/icons/cart.png" alt="Opción 6" onerror="fallbackImage(this, './assets/icons/cart.png')">
+                <span class="option-text">Carrito</span>
             </div>
             <div class="sidebar-option" onclick="window.location.href ='/foodflow/pages/login.jsp'">
                 <img src="../../assets/icons/logout.png" alt="Opción 6" onerror="fallbackImage(this, './assets/icons/logout.png')">
